@@ -52,7 +52,7 @@ export default function Water() {
       });
   }, []);
 
-  const thickness = 2.3 * data.perCovid;
+  const thickness = 1.5 * data.perCovid;
   const material = useRef<CustomShaderMaterialType | null>(null);
 
   useFrame((state) => {
@@ -69,7 +69,12 @@ export default function Water() {
 
   return (
     <group>
-      <mesh castShadow receiveShadow rotation-x={-Math.PI / 2}>
+      <mesh
+        castShadow
+        receiveShadow
+        rotation-x={-Math.PI / 2}
+        position={[0, 0.1, 0]}
+      >
         <boxGeometry args={[4, 4, thickness, 64, 64, 1]} />
         <CustomShaderMaterial
           ref={material}

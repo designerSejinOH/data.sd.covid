@@ -13,7 +13,6 @@ import Water from "./components/Water";
 import { BoxGeometry, Color, MeshPhysicalMaterial } from "three";
 import { useControls } from "leva";
 import { useGLTF } from "@react-three/drei";
-
 export default function App(props: JSX.IntrinsicElements["group"]) {
   const ref = useRef();
   const { nodes, materials } = useGLTF("/scene.glb");
@@ -23,6 +22,7 @@ export default function App(props: JSX.IntrinsicElements["group"]) {
       <div className="absolute z-10 text-white m-4 ">
         성동구소재 코로나현황 데이터 시각화 프로젝트
       </div>
+
       <Leva />
       <Canvas
         gl={{
@@ -178,6 +178,7 @@ export default function App(props: JSX.IntrinsicElements["group"]) {
         <boxGeometry args={[10, 2, 4.5]} />
         <meshStandardMaterial color="white" />
         <Water />
+
         <ContactShadows
           position={[0, -0.2, 0]}
           width={10}
