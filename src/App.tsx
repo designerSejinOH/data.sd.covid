@@ -22,7 +22,6 @@ export default function App(props: JSX.IntrinsicElements["group"]) {
       <div className="absolute z-10 text-white m-4 ">
         성동구소재 코로나현황 데이터 시각화 프로젝트
       </div>
-
       <Leva />
       <Canvas
         gl={{
@@ -33,10 +32,7 @@ export default function App(props: JSX.IntrinsicElements["group"]) {
         }}
       >
         <color attach="background" args={["#000"]} />
-        <Suspense fallback={null}>
-          <Environment preset="sunset" />
-          {/* <Lights /> */}
-        </Suspense>
+        <Environment preset="sunset" />
         <mesh scale={2.2} position={[0, -0.25, 0]}>
           <group {...props} dispose={null}>
             <mesh
