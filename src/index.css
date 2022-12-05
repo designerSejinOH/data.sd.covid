@@ -1,0 +1,45 @@
+/*styles.css*/
+@import url('https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css');
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: 'Galmuri9';
+
+}
+
+.copy {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  text-align: center;
+  color: black;
+
+}
+
+a {
+  font-style: italic;
+  color: #3b56ee;
+}
+
+canvas {
+  cursor: grab;
+}
+
+canvas:active {
+  cursor: grabbing;
+}
