@@ -8,12 +8,12 @@ import * as oceanShader from "../shaders/ocean";
 // @ts-ignore
 import { patchShaders } from "gl-noise/build/glNoise.m";
 
-import useWaterControls from "./useWaterControls";
 import { useControls } from "leva";
 import axios from "axios";
 import { colorToRgba } from "@react-spring/shared";
+import { MeshPhysicalMaterial } from "three";
 
-export default function Water({ base }: { base: any }) {
+export default function Water() {
   const [data, cookData] = useState({
     city: "",
     lvl: "",
@@ -52,7 +52,7 @@ export default function Water({ base }: { base: any }) {
       });
   }, []);
 
-  const thickness = 1 * data.perCovid;
+  const thickness = 2.3 * data.perCovid;
   const material = useRef<CustomShaderMaterialType | null>(null);
 
   useFrame((state) => {
@@ -60,18 +60,12 @@ export default function Water({ base }: { base: any }) {
       //wave_speed
       material.current.uniforms.uTime.value =
         (-state.clock.elapsedTime / 10) * data.perNCovid * 100;
-      console.log(data.perCovid, data.perNCovid);
+      // console.log(data);
       // console.log(material.current.uniforms.uTime.value);
     }
   });
 
-  useWaterControls(material);
-
-  const { Flatshading } = useControls({
-    Flatshading: {
-      value: false,
-    },
-  });
+  // useWaterControls(material);
 
   return (
     <group>
@@ -79,14 +73,14 @@ export default function Water({ base }: { base: any }) {
         <boxGeometry args={[4, 4, thickness, 64, 64, 1]} />
         <CustomShaderMaterial
           ref={material}
-          baseMaterial={base}
+          baseMaterial={MeshPhysicalMaterial}
           vertexShader={patchShaders(oceanShader.vert)}
           fragmentShader={patchShaders(oceanShader.frag)}
           side={THREE.DoubleSide}
           color={0x68c3c0}
           roughness={0.2}
           metalness={0.1}
-          flatShading={Flatshading}
+          flatShading={false}
           vertexColors
           uniforms={{
             uTime: { value: 0 },

@@ -16,7 +16,7 @@ export default function WaterAssembly() {
         scale: 0,
       }}
     >
-      <Water base={undefined} />
+      <Water />
     </motion.group>
   );
 }
