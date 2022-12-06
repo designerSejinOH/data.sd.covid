@@ -60,7 +60,7 @@ export default function Water() {
       //wave_speed
       material.current.uniforms.uTime.value =
         (-state.clock.elapsedTime / 10) * data.perNCovid * 100;
-      // console.log(data);
+      console.log(data);
       // console.log(material.current.uniforms.uTime.value);
     }
   });
