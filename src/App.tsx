@@ -3,178 +3,77 @@ import {
   ContactShadows,
   Environment,
   OrbitControls,
+  PerspectiveCamera,
 } from "@react-three/drei";
-import { Leva } from "leva";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import Water from "./components/Water";
+import { Cloud, Sky } from "@react-three/drei";
+import { Physics } from "@react-three/cannon";
 
-import { BoxGeometry, Color, MeshPhysicalMaterial } from "three";
-import { useControls } from "leva";
-import { useGLTF } from "@react-three/drei";
+import THREE, { BoxGeometry, Color, MeshPhysicalMaterial } from "three";
+
+import { useCovidData } from "./hooks/useCovidData";
+import Water from "./components/Water";
+import People from "./components/People";
+import Ground from "./components/Ground";
+import DataBoard from "./dom/DataBoard";
+import { createSecureContext } from "tls";
+
+const baubles = [...Array(50)].map(() => ({
+  pos: {
+    x: Math.random() * 6 - 3,
+    y: 0,
+    z: Math.random() * 6 - 3,
+    rotation: Math.random() * 2 * Math.PI,
+    w: Math.random() * 0.2,
+  },
+}));
+
+function Bauble({
+  pos,
+}: {
+  pos: {
+    x: number;
+    y: number;
+    z: number;
+    rotation: number;
+    w: number;
+  };
+}) {
+  return <People pos={pos} />;
+}
+
 export default function App(props: JSX.IntrinsicElements["group"]) {
   const ref = useRef();
-  const { nodes, materials } = useGLTF("/scene.glb");
+  const { data: covidData } = useCovidData();
 
   return (
     <>
-      <div className="absolute z-10 text-white m-4 ">
-        성동구소재 코로나현황 데이터 시각화 프로젝트
-      </div>
-      <Leva />
+      <DataBoard />
       <Canvas
         gl={{
           antialias: true,
         }}
-        camera={{
-          position: [4, 4, 4],
-        }}
+        shadows
+        dpr={[1, 10]}
+        camera={{ position: [40, 20, 10], fov: 50, near: 10, far: 1000 }}
       >
-        <color attach="background" args={["#000"]} />
+        <color attach="background" args={["lightpink"]} />
         <Environment preset="sunset" />
-        <mesh scale={2.2} position={[0, -0.25, 0]}>
-          <group {...props} dispose={null}>
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-              geometry={nodes.object_3.geometry}
-              material={materials.Default}
-              position={[0.17, 0.83, -0.75]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
 
-              geometry={nodes.object_2.geometry}
-              material={materials.Default}
-              position={[-0.55, 0.83, -0.74]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-
-              geometry={nodes.object_1.geometry}
-              material={materials.Default}
-              position={[0.71, 0.83, 0.62]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-
-              geometry={nodes.object_4.geometry}
-              material={materials.Default}
-              position={[-0.72, 0.83, -0.34]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-
-              geometry={nodes.object_6.geometry}
-              material={materials.Default}
-              position={[0.81, 0.83, -0.18]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-
-              geometry={nodes.object_7.geometry}
-              material={materials.Default}
-              position={[-0.76, 0.83, 0.87]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-
-              geometry={nodes.object_5.geometry}
-              material={materials.Default}
-              position={[0.63, 0.83, -0.7]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-
-              geometry={nodes.object_10.geometry}
-              material={materials.Default}
-              position={[-0.84, 0.83, 0.63]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-
-              geometry={nodes.object_9.geometry}
-              material={materials.Default}
-              position={[-0.57, 0.83, 0.48]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-
-              geometry={nodes.object_12.geometry}
-              material={materials.Default}
-              position={[-0.24, 0.83, -0.11]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-
-              geometry={nodes.object_8.geometry}
-              material={materials.Default}
-              position={[-0.84, 0.83, 0.33]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-
-              geometry={nodes.object_15.geometry}
-              material={materials.Default}
-              position={[0.45, 0.83, 0.74]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-
-              geometry={nodes.object_13.geometry}
-              material={materials.Default}
-              position={[-0.04, 0.83, -0.3]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-
-              geometry={nodes.object_11.geometry}
-              material={materials.Default}
-              position={[-0.31, 0.83, 0.75]}
-            />
-            <mesh
-              castShadow
-              receiveShadow
-              //@ts-ignore
-
-              geometry={nodes.object_14.geometry}
-              material={materials.Default}
-              position={[0, 0.57, 0]}
-            />
-          </group>
-        </mesh>
-        <boxGeometry args={[10, 2, 4.5]} />
-        <meshStandardMaterial color="white" />
-        <Water />
-
+        <group {...props} dispose={null} scale={[10, 10, 10]}>
+          {/* <Cloud position={[-4, -2, -25]} speed={0.5} opacity={1} /> */}
+          {/* <Cloud position={[4, 2, -15]} speed={0.5} opacity={0.5} /> */}
+          {/* <Cloud position={[-4, 2, -10]} speed={0.5} opacity={1} /> */}
+          {/* <Cloud position={[4, -2, -5]} speed={0.5} opacity={0.5} /> */}
+          {/* <Cloud position={[4, 2, 0]} speed={0.5} opacity={0.75} /> */}
+          <Ground />
+          {
+            baubles.map((props, i) => <Bauble key={i} {...props} />) /* prettier-ignore */
+          }
+          <Water covidData={covidData} />
+        </group>
         <ContactShadows
           position={[0, -0.2, 0]}
           width={10}
@@ -183,7 +82,6 @@ export default function App(props: JSX.IntrinsicElements["group"]) {
           opacity={0.5}
           rotation={[Math.PI / 2, 0, 0]}
         />
-
         <OrbitControls autoRotate={true} />
       </Canvas>
     </>

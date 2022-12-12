@@ -2,8 +2,10 @@ import Water from "./components/Water";
 // @ts-ignore
 import { motion } from "framer-motion/three";
 import React from "react";
+import { useCovidData } from "./hooks/useCovidData";
 
 export default function WaterAssembly() {
+  const { data: covidData } = useCovidData();
   return (
     <motion.group
       initial={{
@@ -16,7 +18,7 @@ export default function WaterAssembly() {
         scale: 0,
       }}
     >
-      <Water />
+      <Water covidData={covidData} />
     </motion.group>
   );
 }
