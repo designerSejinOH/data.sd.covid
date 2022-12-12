@@ -18,6 +18,7 @@ body,
 }
 
 body {
+  background-color: lightpink;
   box-sizing: border-box;
   font-family: 'Galmuri9';
   overflow: hidden;
@@ -45,4 +46,52 @@ canvas {
 
 canvas:active {
   cursor: grabbing;
+}
+
+#loading {
+  display: grid;
+  justify-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: lightpink;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  min-width: 300px;
+}
+
+#progress-8 {
+  align-self: end;
+  padding-bottom: 10px;
+  width: 4.1rem;
+  height: 4rem;
+  border-radius: 50%;
+  -webkit-mask: linear-gradient(0deg, lightpink 55%, #0000 0) bottom/100% 18.18%;
+  background:
+    linear-gradient(lightpink 0 0) bottom/100% 0% no-repeat #ddd;
+  animation: p8 2s infinite steps(7);
+}
+
+@keyframes p8 {
+  100% {
+    background-size: 100% 115%
+  }
+}
+
+#classic-5 {
+  align-self: start;
+  padding-top: 10px;
+  color: #ddd;
+  font-size: 1em;
+  /* clip-path: inset(0 100% 0 0); */
+  /* animation: c5 2s steps(50) infinite; */
+}
+
+@keyframes c5 {
+  to {
+    clip-path: inset(0 -1ch 0 0)
+  }
 }

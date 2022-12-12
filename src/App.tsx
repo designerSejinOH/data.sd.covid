@@ -2,6 +2,7 @@ import {
   Box,
   ContactShadows,
   Environment,
+  Html,
   OrbitControls,
   PerspectiveCamera,
 } from "@react-three/drei";
@@ -57,21 +58,30 @@ export default function App(props: JSX.IntrinsicElements["group"]) {
         dpr={[1, 10]}
         camera={{ position: [40, 20, 10], fov: 50, near: 10, far: 1000 }}
       >
-        <color attach="background" args={["lightpink"]} />
-        <Environment preset="sunset" />
-
-        <group {...props} dispose={null} scale={[10, 10, 10]}>
-          {/* <Cloud position={[-4, -2, -25]} speed={0.5} opacity={1} /> */}
-          {/* <Cloud position={[4, 2, -15]} speed={0.5} opacity={0.5} /> */}
-          {/* <Cloud position={[-4, 2, -10]} speed={0.5} opacity={1} /> */}
-          {/* <Cloud position={[4, -2, -5]} speed={0.5} opacity={0.5} /> */}
-          {/* <Cloud position={[4, 2, 0]} speed={0.5} opacity={0.75} /> */}
-          <Ground />
-          {
-            baubles.map((props, i) => <Bauble key={i} {...props} />) /* prettier-ignore */
+        <Suspense
+          fallback={
+            <Html center>
+              <div id="progress-8"></div>
+              <div id="classic-5"></div>
+            </Html>
           }
-          <Water covidData={covidData} />
-        </group>
+        >
+          <color attach="background" args={["lightpink"]} />
+          <Environment preset="sunset" />
+
+          <group {...props} dispose={null} scale={[10, 10, 10]}>
+            {/* <Cloud position={[-4, -2, -25]} speed={0.5} opacity={1} /> */}
+            {/* <Cloud position={[4, 2, -15]} speed={0.5} opacity={0.5} /> */}
+            {/* <Cloud position={[-4, 2, -10]} speed={0.5} opacity={1} /> */}
+            {/* <Cloud position={[4, -2, -5]} speed={0.5} opacity={0.5} /> */}
+            {/* <Cloud position={[4, 2, 0]} speed={0.5} opacity={0.75} /> */}
+            <Ground />
+            {
+              baubles.map((props, i) => <Bauble key={i} {...props} />) /* prettier-ignore */
+            }
+            <Water covidData={covidData} />
+          </group>
+        </Suspense>
         <ContactShadows
           position={[0, -0.2, 0]}
           width={10}
