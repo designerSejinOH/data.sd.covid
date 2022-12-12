@@ -5,7 +5,7 @@ import { MeshPhysicalMaterial } from "three";
 export default function Ground(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("/land.glb");
   const material = new MeshPhysicalMaterial({
-    color: "#333",
+    color: "#000",
     roughness: 0.5,
     metalness: 0.5,
   });

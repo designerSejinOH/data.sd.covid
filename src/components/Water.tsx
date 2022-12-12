@@ -17,7 +17,7 @@ import { useCovidData } from "src/hooks/useCovidData";
 
 export default function Water({ covidData }: { covidData: any }) {
   const data = covidData;
-  const thickness = 1 * data.perCovid;
+  const thickness = 0.5 * data.perCovid;
   const material = useRef<CustomShaderMaterialType | null>(null);
 
   useFrame((state) => {

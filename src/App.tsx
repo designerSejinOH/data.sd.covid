@@ -20,16 +20,6 @@ import Ground from "./components/Ground";
 import DataBoard from "./dom/DataBoard";
 import { createSecureContext } from "tls";
 
-const baubles = [...Array(50)].map(() => ({
-  pos: {
-    x: Math.random() * 6 - 3,
-    y: 0,
-    z: Math.random() * 6 - 3,
-    rotation: Math.random() * 2 * Math.PI,
-    w: Math.random() * 0.2,
-  },
-}));
-
 function Bauble({
   pos,
 }: {
@@ -47,7 +37,15 @@ function Bauble({
 export default function App(props: JSX.IntrinsicElements["group"]) {
   const ref = useRef();
   const { data: covidData } = useCovidData();
-
+  const baubles = [...Array(covidData.ppCount)].map(() => ({
+    pos: {
+      x: Math.random() * 5 - 2.5,
+      y: 0,
+      z: Math.random() * 5 - 2.5,
+      rotation: Math.random() * 2 * Math.PI,
+      w: Math.random() * 0.2,
+    },
+  }));
   return (
     <>
       <DataBoard />
@@ -82,7 +80,14 @@ export default function App(props: JSX.IntrinsicElements["group"]) {
           opacity={0.5}
           rotation={[Math.PI / 2, 0, 0]}
         />
-        <OrbitControls autoRotate={true} />
+        <OrbitControls
+          autoRotate={true}
+          maxPolarAngle={Math.PI * 0.495}
+          enableDamping={true}
+          dampingFactor={0.1}
+          minDistance={20}
+          maxDistance={100}
+        />
       </Canvas>
     </>
   );

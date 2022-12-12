@@ -20,7 +20,7 @@ body,
 body {
   box-sizing: border-box;
   font-family: 'Galmuri9';
-
+  overflow: hidden;
 }
 
 .copy {

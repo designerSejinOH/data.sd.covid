@@ -16,6 +16,7 @@ export const useCovidData = () => {
     perNCovid: 0,
     ppMaxVal: 0,
     ppMinVal: 0,
+    ppCount: 0,
   });
   useEffect(() => {
     axios
@@ -23,7 +24,20 @@ export const useCovidData = () => {
         "https://datacook.org/api/open/dishes?id=4388&token=SK6250UN3SUWvTEWKwOb81225"
       )
       .then((response) => {
+        let ppCount_ = 0;
         cookData((prevData) => {
+          if (response.data.lvl === "여유") {
+            ppCount_ = 20;
+          } else if (response.data.lvl === "보통") {
+            ppCount_ = 40;
+          } else if (response.data.lvl === "혼잡") {
+            ppCount_ = 60;
+          } else if (response.data.lvl === "매우혼잡") {
+            ppCount_ = 80;
+          } else if (response.data.lvl === "위험") {
+            ppCount_ = 100;
+          }
+
           return {
             ...prevData,
             city: response.data.city,
@@ -39,6 +53,7 @@ export const useCovidData = () => {
             perNCovid: (response.data.nCovid / response.data.pp) * 50,
             ppMaxVal: response.data.ppMaxVal / 100,
             ppMinVal: response.data.ppMinVal / 100,
+            ppCount: ppCount_,
           };
         });
       });

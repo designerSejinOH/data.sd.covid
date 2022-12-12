@@ -10,7 +10,7 @@ export default function DataBoard() {
         <div className="text-2xl font-bold m-10">
           성동구소재 코로나현황 데이터 시각화 프로젝트
         </div>
-        <div className="m-10">
+        <div className="m-10 hidden mobile:block">
           <div className="text-base w-fit leading-10">
             <li>도시 : {covidData.city}</li>
             <li> 도시 밀집도 : {covidData.lvl}</li>
