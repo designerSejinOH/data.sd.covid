@@ -20,7 +20,7 @@ import People from "./components/People";
 import Ground from "./components/Ground";
 import DataBoard from "./dom/DataBoard";
 import { createSecureContext } from "tls";
-import RouteChangeTracker from "./components/RouteChangeTracker";
+// import RouteChangeTracker from "./components/RouteChangeTracker";
 
 function Bauble({
   pos,
@@ -37,7 +37,7 @@ function Bauble({
 }
 
 export default function App(props: JSX.IntrinsicElements["group"]) {
-  RouteChangeTracker();
+  // RouteChangeTracker();
 
   const ref = useRef();
   const { data: covidData } = useCovidData();
