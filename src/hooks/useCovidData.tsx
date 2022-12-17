@@ -30,12 +30,10 @@ export const useCovidData = () => {
             ppCount_ = 20;
           } else if (response.data.lvl === "보통") {
             ppCount_ = 40;
-          } else if (response.data.lvl === "혼잡") {
+          } else if (response.data.lvl === "붐빔") {
             ppCount_ = 60;
-          } else if (response.data.lvl === "매우혼잡") {
+          } else if (response.data.lvl === "매우붐빔") {
             ppCount_ = 80;
-          } else if (response.data.lvl === "위험") {
-            ppCount_ = 100;
           }
 
           return {
